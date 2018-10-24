@@ -1,0 +1,34 @@
+{
+  "name": "react-sourcery",
+  "version": "0.9.1",
+  "description": "Sourcery is a delightful framework for hooking up react components to your api and caching requests locally. See README for more details.",
+  "main": "./Sourcery.js",
+  "scripts": {
+    "build:npm": "npx parcel build --no-minify --no-source-maps -t node -d ./ -o Sourcery.js ./src/index.js",
+    "fix_npm_build": "echo ';\nvar parcelRequire;' >> ./Sourcery.js",
+    "build:web": "npx parcel build --no-source-maps -d ./ -o Sourcery.web.js ./src/index.js",
+    "test": "npm run build:npm && npm run fix_npm_build && npm run jest",
+    "jest": "npx jest --verbose",
+    "build": "npm test && npm run build:web"
+  },
+  "author": "Aaron Goin",
+  "license": "AGPL-3.0-only",
+  "devDependencies": {
+    "babel-core": "6.26.3",
+    "babel-preset-env": "1.7.0",
+    "babel-preset-flow": "6.23.0",
+    "babel-preset-react": "6.24.1",
+    "babel-preset-stage-3": "^6.24.1",
+    "enzyme": "^3.7.0",
+    "enzyme-adapter-react-16": "^1.6.0",
+    "flow": "^0.2.3",
+    "flow-bin": "^0.82.0",
+    "flow-typed": "^2.5.1",
+    "jest": "^23.6.0",
+    "parcel-bundler": "^1.10.2",
+    "react-dom": "^16.5.2"
+  },
+  "dependencies": {
+    "react": "^16.5.2"
+  }
+}
