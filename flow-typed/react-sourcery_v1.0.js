@@ -77,6 +77,7 @@ declare type QueryParamsT = {
 
 declare type RouteT = {
   url: string,
+  postUrl?: string, 
   store?: ?StoreT<mixed>,
   useStored?: boolean,
   queryParams?: boolean,
@@ -88,5 +89,5 @@ declare type RoutesConfigT = { [string]: RouteT };
 
 declare type DataT = string | Blob | ArrayBuffer | Object;
 
-declare type UpdateFunctionT = (data: ?DataT) => ?DataT;
-declare type UpdateWrapperFunctionT = (key: string) => UpdateFunctionT
+declare type UpdateFnT = (data: ?DataT) => ?DataT;
+declare type UpdateCallbackT = (key: string) => UpdateFnT

@@ -13,6 +13,10 @@
   },
   "author": "Aaron Goin",
   "license": "AGPL-3.0-only",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aarongoin/react-sourcery.git"
+  },
   "devDependencies": {
     "babel-core": "6.26.3",
     "babel-preset-env": "1.7.0",
@@ -29,6 +33,7 @@
     "react-dom": "^16.5.2"
   },
   "dependencies": {
+    "@babel/preset-react": "^7.0.0",
     "react": "^16.5.2"
   }
 }

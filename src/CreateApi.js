@@ -34,13 +34,13 @@ const encodeQuery = (params: ?QueryParamsT) => {
 }
 
 /** create api request function for a given route configuration */
-const Sourcify = (key: string, route: RouteT, config: FetchConfigT, onUpdate: ?UpdateFunctionT) => {
-  const { url, store, useStored, queryParams, bodyType } = route;
+const Sourcify = (key: string, route: RouteT, config: FetchConfigT, onUpdate: ?UpdateFnT) => {
+  const { url: baseUrl, postUrl, store, useStored, queryParams, bodyType } = route;
 
-  if (useStored && !store) throw new Error(`Property 'useStored' requires property 'store' to be defined in route config ${key}.`);
-  
+  if (useStored && !store) throw new Error(`Property 'useStored' requires property 'store' to be defined in route config ${key}.`);  
   if (onUpdate == null) onUpdate = data => data;
 
+  const url = config.method === 'post' && postUrl ? postUrl : baseUrl;
   const params: string[] = url.match(paramTest) || [];
   /** wrapper function to create a uri from a url with parameters if there are any parameters */
   const makeUri = params.length > 0
@@ -66,7 +66,7 @@ const Sourcify = (key: string, route: RouteT, config: FetchConfigT, onUpdate: ?U
   };
 
   let req = null;
-  /** actual request body */
+  /** actual request function */
   let requestFunction = makeUri((body, uri) => {
     if (typeof uri !== 'string') uri = url;
     if (useStored && store && store.has(uri)) return Promise.resolve(store.get(uri));
@@ -109,7 +109,7 @@ const Sourcify = (key: string, route: RouteT, config: FetchConfigT, onUpdate: ?U
 const methods: string[] = ['get', 'put', 'post', 'patch', 'head', 'options', 'delete', 'trace'];
 
 /** create api object containing all api endpoints in requests configuration object */
-const createApi = (requests: RoutesConfigT, onUpdate: ?UpdateWrapperFunctionT) => {
+const createApi = (requests: RoutesConfigT, onUpdate: ?UpdateCallbackT) => {
   const result = {};
   for (const key in requests) {
     if (requests.hasOwnProperty(key)) {
