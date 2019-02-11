@@ -241,7 +241,8 @@ const encodeQuery = params => {
 
 const Sourcify = (key, route, config, onUpdate) => {
   const {
-    url,
+    url: baseUrl,
+    postUrl,
     store,
     useStored,
     queryParams,
@@ -249,6 +250,7 @@ const Sourcify = (key, route, config, onUpdate) => {
   } = route;
   if (useStored && !store) throw new Error(`Property 'useStored' requires property 'store' to be defined in route config ${key}.`);
   if (onUpdate == null) onUpdate = data => data;
+  const url = config.method === 'post' && postUrl ? postUrl : baseUrl;
   const params = url.match(paramTest) || [];
   /** wrapper function to create a uri from a url with parameters if there are any parameters */
 
@@ -274,7 +276,7 @@ const Sourcify = (key, route, config, onUpdate) => {
   };
 
   let req = null;
-  /** actual request body */
+  /** actual request function */
 
   let requestFunction = makeUri((body, uri) => {
     if (typeof uri !== 'string') uri = url;
